@@ -157,18 +157,57 @@ stats shaker_sort(std::vector<T>& data)
 	return st;
 }
 
+template <typename T>
+stats comb_sort(std::vector<T>& data)
+{
+	stats st;
+	st.comparison_count = 0;
+	st.copy_count = 0;
+	double factor = 1.247;
+	int len = data.size();
+	int gap = len;
+	while (gap > 1) {
+		gap = int(gap / factor);
+		if (gap < 1) { gap = 1; }
+		int i = 0;
+		while (gap + i < len)
+		{
+			if (data[i] > data[i + gap]) {
+				std::swap(data[i], data[i + gap]);
+				st.copy_count++;
+			}
+			i++;
+
+		}
+
+	}
+	for (int i = 1; i < len; i++) {
+		int j = i;
+		while (j>0 && data[j-1]>data[j])
+		{
+			std::swap(data[j-1], data[j]);
+			j--;
+			st.copy_count++;
+		}
+	}
+	return st;
+}
+
 int main() {
 	std::vector<int> abc;
 	for (int i = 10; i >= 4; i--)
 	{
 		abc.push_back(i);
 	}
+
+	stats st = comb_sort<int>(abc);
+
 	
-	/*
 	for (int i = 0; i < abc.size(); i++)
 	{
 		std::cout << abc[i] << " ";
-	}*/
+	}
+	
 
 	/*
 	struct stats {
@@ -176,7 +215,7 @@ int main() {
 	size_t copy_count = 0;
 	};
 	*/
-	auto vect = create_random_vector<int>(15);
+	/*auto vect = create_random_vector<int>(15);*/
 
 	/*
 	stats st = shaker_sort<int>(vect);
@@ -188,7 +227,7 @@ int main() {
 		std::cout << *i << " ";
 	}
 	*/
-	std::vector<data_grath> graph;
+	/*std::vector<data_grath> graph;
 	statistic<int>(100, graph, bubble_sort);
-	int aboba = 0;
+	int aboba = 0;*/
 }
